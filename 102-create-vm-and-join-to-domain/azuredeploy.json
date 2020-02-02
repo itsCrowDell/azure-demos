@@ -39,7 +39,6 @@
     "dnsLabelPrefix": "[concat(uniquestring(resourceGroup().id, deployment().name))]",
     "vmSize": "Standard_B2s",
     "domainToJoin": "contoso.com",
-    "ouPath": "CN=Computers,DC=contoso,DC=com",
     "domainJoinOptions": "3",
     "location": "eastus"
   },
@@ -149,7 +148,6 @@
         "autoUpgradeMinorVersion": true,
         "settings": {
           "Name": "[variables('domainToJoin')]",
-          "OUPath": "[variables('ouPath')]",
           "User": "[concat(variables('domainToJoin'), '\\', parameters('domainUsername'))]",
           "Restart": "true",
           "Options": "[variables('domainJoinOptions')]"
