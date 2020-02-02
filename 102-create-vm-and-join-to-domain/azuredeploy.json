@@ -13,18 +13,6 @@
       "metadata": {
         "description": "Password of the account on the domain"
       }
-    },
-    "vmAdminUsername": {
-      "type": "string",
-      "metadata": {
-        "description": "The name of the administrator of the new VM and the domain. Exclusion list: 'admin','administrator"
-      }
-    },
-    "vmAdminPassword": {
-      "type": "securestring",
-      "metadata": {
-        "description": "The password for the administrator account of the new VM and the domain"
-      }
     }
   },
   "variables": {

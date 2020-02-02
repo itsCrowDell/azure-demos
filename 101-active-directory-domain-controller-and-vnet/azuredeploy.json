@@ -20,12 +20,12 @@
       "windowsOSVersion": "2019-Datacenter",
       "vmSize": "Standard_B2s",
       "location": "eastus",
-      "nicName": "DC01-NIC1",
+      "nicName": "DC01-NIC01",
       "addressPrefix": "172.22.0.0/16",
       "subnetName": "Subnet01",
       "subnetPrefix": "172.22.0.0/24",
       "privateIPAddress": "172.22.0.250",
-      "publicIPAddressName": "DC01-PIP1",
+      "publicIPAddressName": "DC01-PIP01",
       "vmName": "DC01",
       "virtualNetworkName": "VNET01",
       "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), variables('subnetName'))]",
@@ -133,7 +133,7 @@
                     },
                     "dataDisks": [
                         {
-                            "name": "[concat(variables('vmName'), '_DataDisk1')]",
+                            "name": "[concat(variables('vmName'), '_DataDisk01')]",
                             "caching": "ReadWrite",
                             "createOption": "Empty",
                             "diskSizeGB": 20,
