@@ -159,7 +159,7 @@
                     "name": "CreateADForest",
                     "location": "[variables('location')]",
                     "dependsOn": [
-                        "[parameters('vmName')]"
+                        "[variables('vmName')]"
                     ],
                     "properties": {
                         "publisher": "Microsoft.Powershell",
