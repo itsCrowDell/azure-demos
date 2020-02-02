@@ -25,7 +25,7 @@
       "subnetName": "Subnet01",
       "subnetPrefix": "172.22.0.0/24",
       "privateIPAddress": "172.22.0.250",
-      "publicIPAddressName": "DC01-PIP",
+      "publicIPAddressName": "DC01-PIP1",
       "vmName": "DC01",
       "virtualNetworkName": "VNET01",
       "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), variables('subnetName'))]",
@@ -133,7 +133,7 @@
                     },
                     "dataDisks": [
                         {
-                            "name": "[concat(variables('vmName'), '_DataDisk')]",
+                            "name": "[concat(variables('vmName'), '_DataDisk1')]",
                             "caching": "ReadWrite",
                             "createOption": "Empty",
                             "diskSizeGB": 20,
