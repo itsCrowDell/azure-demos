@@ -39,7 +39,7 @@
     "dnsLabelPrefix": "[concat(uniquestring(resourceGroup().id, deployment().name))]",
     "vmSize": "Standard_B2s",
     "domainToJoin": "contoso.com",
-    "ouPath": "CN=Computers; DC=contoso; DC=com",
+    "ouPath": "CN=Computers,DC=contoso,DC=com",
     "domainJoinOptions": "3",
     "location": "eastus"
   },
