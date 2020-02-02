@@ -173,7 +173,7 @@
       }
     },
     {
-      "type": "extensions",
+      "type": "Microsoft.Compute/virtualMachines/extensions",
       "apiVersion": "2019-03-01",
       "name": "CreateADForest",
       "location": "[parameters('location')]",
