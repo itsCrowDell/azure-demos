@@ -82,8 +82,6 @@
         },
         "osProfile": {
           "computerName": "[variables('dnsLabelPrefix')]",
-          "adminUsername": "[parameters('vmAdminUsername')]",
-          "adminPassword": "[parameters('vmAdminPassword')]"
         },
         "storageProfile": {
           "imageReference": {
