@@ -38,7 +38,7 @@
         }
     },
     "variables": {
-      "workspaceName": "az-security-workspace",
+      "workspaceName": "[concat(uniquestring(resourceGroup().id, deployment().name))]",
       "workspaceRgName": "azsec-security-rg",
       "autoProvisionSetting": "On",
       "virtualMachineTier": "Standard",
