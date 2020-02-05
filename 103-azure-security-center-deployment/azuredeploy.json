@@ -1,0 +1,181 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.1",
+    "parameters": {
+        "ascOwnerEmail": {
+            "type": "string",
+            "metadata": {
+                "description": "Email of the administrator who should be notified about Azure Security Center alert"
+            }
+        },
+        "ascOwnerContact": {
+            "type": "string",
+            "metadata": {
+                "description": "Phone number of the administrator should be notified about Azure Security Center alert"
+            }
+        },
+        "highSeverityAlertNotification": {
+            "type": "string",
+            "defaultValue": "On",
+            "allowedValues": [
+                "On",
+                "Off"
+            ],
+            "metadata": {
+                "description": "Specify whether you want to notify high severity alert to ASC administrator"
+            }
+        },
+        "subscriptionOwnerNotification": {
+            "type": "string",
+            "defaultValue": "On",
+            "allowedValues": [
+                "On",
+                "Off"
+            ],
+            "metadata": {
+                "description": "Specifiy whether you want to notify high severity alert to subscription owner"
+            }
+        }
+    },
+    "variables": {
+      "workspaceName": "az-security-workspace",
+      "workspaceRgName": "azsec-security-rg",
+      "autoProvisionSetting": "On",
+      "virtualMachineTier": "Standard",
+      "appServiceTier": "Standard",
+      "paasSQLServiceTier": "Standard",
+      "sqlServerOnVmTier": "Standard",
+      "storageAccountTier": "Standard",
+      "kubernetesServiceTier": "Standard",
+      "containerRegistryTier": "Standard",
+      "keyvaultTier": "Standard",
+      "integrationName": "MDATP",
+      "integrationEnabled": "false"
+    },
+    "resources": [
+        {
+            "type": "Microsoft.Security/workspaceSettings",
+            "apiVersion": "2017-08-01-preview",
+            "name": "default",
+            "properties": {
+                "scope": "[subscription().id]",
+                "workspaceId": "[concat(subscription().id,'/resourceGroups/',variables('workspaceRgName'),'/providers/Microsoft.OperationalInsights/workspaces/',variables('workspaceName'))]"
+            }
+        },
+        {
+            "type": "Microsoft.Security/autoProvisioningSettings",
+            "apiVersion": "2017-08-01-preview",
+            "name": "default",
+            "properties": {
+                "autoProvision": "[variables('autoProvisionSetting')]"
+            }
+        },
+        {
+            "type": "Microsoft.Security/securityContacts",
+            "apiVersion": "2017-08-01-preview",
+            "name": "default1",
+            "properties": {
+                "email": "[parameters('ascOwnerEmail')]",
+                "phone": "[parameters('ascOwnerContact')]",
+                "alertNotifications": "[parameters('highSeverityAlertNotification')]",
+                "alertsToAdmins": "[parameters('subscriptionOwnerNotification')]"
+            }
+        },
+        {
+            "type": "Microsoft.Security/pricings",
+            "apiVersion": "2018-06-01",
+            "name": "VirtualMachines",
+            "properties": {
+                "pricingTier": "[variables('virtualMachineTier')]"
+            }
+        },
+        {
+            "type": "Microsoft.Security/pricings",
+            "apiVersion": "2018-06-01",
+            "name": "AppServices",
+            "dependsOn": [
+                "[concat('Microsoft.Security/pricings/VirtualMachines')]"
+            ],
+            "properties": {
+                "pricingTier": "[variables('appServiceTier')]"
+            }
+        },
+        {
+            "type": "Microsoft.Security/pricings",
+            "apiVersion": "2018-06-01",
+            "name": "SqlServers",
+            "dependsOn": [
+                "[concat('Microsoft.Security/pricings/AppServices')]"
+            ],
+            "properties": {
+                "pricingTier": "[variables('paasSQLServiceTier')]"
+            }
+        },
+        {
+            "type": "Microsoft.Security/pricings",
+            "apiVersion": "2018-06-01",
+            "name": "SqlServerVirtualMachines",
+            "dependsOn": [
+                "[concat('Microsoft.Security/pricings/SqlServers')]"
+            ],
+            "properties": {
+                "pricingTier": "[variables('sqlServerOnVmTier')]"
+            }
+        },
+        {
+            "type": "Microsoft.Security/pricings",
+            "apiVersion": "2018-06-01",
+            "name": "StorageAccounts",
+            "dependsOn": [
+                "[concat('Microsoft.Security/pricings/SqlServerVirtualMachines')]"
+            ],
+            "properties": {
+                "pricingTier": "[variables('storageAccountTier')]"
+            }
+        },
+        {
+            "type": "Microsoft.Security/pricings",
+            "apiVersion": "2018-06-01",
+            "name": "KubernetesService",
+            "dependsOn": [
+                "[concat('Microsoft.Security/pricings/StorageAccounts')]"
+            ],
+            "properties": {
+                "pricingTier": "[variables('kubernetesServiceTier')]"
+            }
+        },
+        {
+            "type": "Microsoft.Security/pricings",
+            "apiVersion": "2018-06-01",
+            "name": "ContainerRegistry",
+            "dependsOn": [
+                "[concat('Microsoft.Security/pricings/KubernetesService')]"
+            ],
+            "properties": {
+                "pricingTier": "[variables('containerRegistryTier')]"
+            }
+        },
+        {
+            "type": "Microsoft.Security/pricings",
+            "apiVersion": "2018-06-01",
+            "name": "KeyVaults",
+            "dependsOn": [
+                "[concat('Microsoft.Security/pricings/ContainerRegistry')]"
+            ],
+            "properties": {
+                "pricingTier": "[variables('keyvaultTier')]"
+            }
+        },
+        {
+            "type": "Microsoft.Security/settings",
+            "apiVersion": "2019-01-01",
+            "name": "[parameters('integrationName')]",
+            "kind": "DataExportSettings",
+            "properties": {
+                "enabled": "[variables('integrationEnabled')]"
+            }
+        }
+    ],
+    "outputs": {
+    }
+}
