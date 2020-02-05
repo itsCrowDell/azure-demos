@@ -81,7 +81,7 @@
           "vmSize": "[variables('vmSize')]"
         },
         "osProfile": {
-          "computerName": "[variables('dnsLabelPrefix')]",
+          "computerName": "[variables('dnsLabelPrefix')]"
         },
         "storageProfile": {
           "imageReference": {
