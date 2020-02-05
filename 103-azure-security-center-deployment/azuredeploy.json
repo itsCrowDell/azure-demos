@@ -169,7 +169,7 @@
         {
             "type": "Microsoft.Security/settings",
             "apiVersion": "2019-01-01",
-            "name": "[parameters('integrationName')]",
+            "name": "[variables('integrationName')]",
             "kind": "DataExportSettings",
             "properties": {
                 "enabled": "[variables('integrationEnabled')]"
