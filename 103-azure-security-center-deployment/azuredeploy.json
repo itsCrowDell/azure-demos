@@ -24,14 +24,6 @@
     },
     "resources": [
         {
-            "type": "Microsoft.Security/autoProvisioningSettings",
-            "name": "default",
-            "apiVersion": "2017-08-01-preview",
-            "properties": {
-                "autoProvision": "[variables('autoProvisioning')]"
-            }
-        },
-        {
             "type": "Microsoft.Security/workspaceSettings",
             "apiVersion": "2017-08-01-preview",
             "name": "default",
@@ -49,6 +41,14 @@
             "phone": "[parameters('phoneSecurityContact')]",
             "alertNotifications": "[variables('alertNotifications')]",
             "alertsToAdmins": "[variables('alertsToAdmin')]"
+            }
+        },
+        {
+            "type": "Microsoft.Security/autoProvisioningSettings",
+            "name": "default",
+            "apiVersion": "2017-08-01-preview",
+            "properties": {
+                "autoProvision": "[variables('autoProvisioning')]"
             }
         },
         {
