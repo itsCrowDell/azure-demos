@@ -25,9 +25,9 @@
 "resources": [
     {
         "type": "Microsoft.OperationalInsights/workspaces",
-        "name": "[parameters('workspaceName')]",
+        "name": "[variables('workspaceName')]",
         "apiVersion": "2017-03-15-preview",
-        "location": "[parameters('location')]",
+        "location": "[variables('location')]",
         "properties": {
             "sku": {
                 "name": "CapacityReservation",
