@@ -19,7 +19,7 @@
    }
 },
 "variables": {
-  "workspaceName": "[concat(uniquestring(resourceGroup().id, deployment().name))]"
+  "workspaceName": "[concat(uniquestring(resourceGroup().id, deployment().name))]",
   "location": "eastus"
 },
 "resources": [
