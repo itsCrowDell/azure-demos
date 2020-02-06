@@ -2,53 +2,105 @@
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
+        "autoProvisioning":{
+            "type": "string",
+            "allowedValues": [
+                "On",
+                "Off"
+            ],
+            "metadata": {
+                "description": "Turn automatic deployment by ASC of the MMA (OMS VM extension) on or off"
+            }
+        },
+        "workspaceName": {
+            "type": "string",
+            "metadata": {
+                "description": "Specify the name of your custom Log Analytics workspace to collect ASC data."
+            }
+        },
+        "workspaceSubscriptionId": {
+            "type": "string",
+            "metadata": {
+                "description": "Specify the subscriptionId where the custom Log Analytics workspace is deployed."
+            }
+        },
+        "workspaceResourceGroup": {
+            "type": "string",
+            "metadata": {
+                "description": "Specify the resource group where the custom Log Analytics workspace is deployed."
+            }
+        },
         "emailSecurityContact":{
             "type": "string",
             "metadata": {
-                "description": "Email address of the contact, in the form of john@doe.com"
+                "description": "email address of the contact, in the form of john@doe.com"
             }
         },
         "phoneSecurityContact":{
             "type": "string",
             "metadata": {
-                "description": "Phone number of the Security Contact"
+                "description": "phone number of the Security Contact"
+            }
+        },
+        "alertNotifications":{
+            "type": "string",
+            "allowedValues": [
+                "On",
+                "Off"
+            ],
+            "metadata": {
+                "description": "Send alert notifications to Security Contact"
+            }
+        },
+        "alertsToAdmin":{
+            "type": "string",
+            "allowedValues": [
+                "On",
+                "Off"
+            ],
+            "metadata": {
+                "description": "Send alert notifications to Admins"
+            }
+        },
+        "securitySettings": {
+            "type": "string",
+            "allowedValues": [
+                "On",
+                "Off"
+            ],
+            "metadata": {
+                "description": "Turn security policy settings On or Off."
             }
         }
     },
-    "variables": {
-      "autoProvisioning": "On",
-      "workspaceName": "[concat(uniquestring(resourceGroup().id, deployment().name))]",
-      "workspaceResourceGroup": "azsec-security-rg",
-      "alertsToAdmin": "On",
-      "securitySettings": "On"
-    },
+    "variables": {},
     "resources": [
+        {
+            "type": "Microsoft.Security/autoProvisioningSettings",
+            "name": "default",
+            "apiVersion": "2017-08-01-preview",
+            "properties":{
+                "autoProvision": "[parameters('autoProvisioning')]"
+            }
+        },
         {
             "type": "Microsoft.Security/workspaceSettings",
             "apiVersion": "2017-08-01-preview",
             "name": "default",
             "properties": {
-                "workspaceId": "[concat(subscription().id,'/resourceGroups/', variables('workspaceResourceGroup'), '/providers/Microsoft.OperationalInsights/workspaces/', variables('workspaceName'))]",
+                "workspaceId": "[concat('/subscriptions/', parameters('workspaceSubscriptionId'), '/resourceGroups/', parameters('workspaceResourceGroup'), '/providers/Microsoft.OperationalInsights/workspaces/', parameters('workspaceName'))]",
                 "scope": "[subscription().id]"
             }
         },
         {
             "type": "Microsoft.Security/securityContacts",
-            "name": "default",
+            "name": "default1",
             "apiVersion": "2017-08-01-preview",
-            "properties": {
+            "properties":{
             "email": "[parameters('emailSecurityContact')]",
             "phone": "[parameters('phoneSecurityContact')]",
-            "alertNotifications": "[variables('alertNotifications')]",
-            "alertsToAdmins": "[variables('alertsToAdmin')]"
-            }
-        },
-        {
-            "type": "Microsoft.Security/autoProvisioningSettings",
-            "name": "default",
-            "apiVersion": "2017-08-01-preview",
-            "properties": {
-                "autoProvision": "[variables('autoProvisioning')]"
+            "alertNotifications": "[parameters('alertNotifications')]",
+            "alertsToAdmins": "[parameters('alertsToAdmin')]"
             }
         },
         {
@@ -61,19 +113,19 @@
                 "unique": "Off",
                 "logCollection": "Off",
                 "recommendations": {
-                    "patch": "[variables('securitySettings')]",
-                    "baseline": "[variables('securitySettings')]",
-                    "antimalware": "[variables('securitySettings')]",
-                    "diskEncryption": "[variables('securitySettings')]",
-                    "acls": "[variables('securitySettings')]",
-                    "nsgs": "[variables('securitySettings')]",
-                    "waf": "[variables('securitySettings')]",
-                    "sqlAuditing": "[variables('securitySettings')]",
-                    "sqlTde": "[variables('securitySettings')]",
-                    "ngfw": "[variables('securitySettings')]",
-                    "vulnerabilityAssessment": "[variables('securitySettings')]",
-                    "storageEncryption": "[variables('securitySettings')]",
-                    "jitNetworkAccess": "[variables('securitySettings')]"
+                    "patch": "[parameters('securitySettings')]",
+                    "baseline": "[parameters('securitySettings')]",
+                    "antimalware": "[parameters('securitySettings')]",
+                    "diskEncryption": "[parameters('securitySettings')]",
+                    "acls": "[parameters('securitySettings')]",
+                    "nsgs": "[parameters('securitySettings')]",
+                    "waf": "[parameters('securitySettings')]",
+                    "sqlAuditing": "[parameters('securitySettings')]",
+                    "sqlTde": "[parameters('securitySettings')]",
+                    "ngfw": "[parameters('securitySettings')]",
+                    "vulnerabilityAssessment": "[parameters('securitySettings')]",
+                    "storageEncryption": "[parameters('securitySettings')]",
+                    "jitNetworkAccess": "[parameters('securitySettings')]"
                 },
                 "pricingConfiguration": {
                     "selectedPricingTier": "Standard"
