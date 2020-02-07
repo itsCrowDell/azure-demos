@@ -1,25 +1,11 @@
 {
   "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
-  "parameters": {
-    "existingVirtualMachinesResourceGroup": {
-      "type": "string",
-      "metadata": {
-        "description": "Resource group where the virtual machines are located. This can be different than resource group of the vault. "
-      }
-    }
-  },
   "variables": {
-    "skuName": "RS0",
-    "skuTier": "Standard",
     "vaultName": "contoso-vault",
     "location": "[resourceGroup().location]",
-    "backupFabric": "Azure",
-    "v2VmType": "Microsoft.Compute/virtualMachines",
-    "v2VmContainer": "iaasvmcontainer;iaasvmcontainerv2;",
-    "v2Vm": "vm;iaasvmcontainerv2;",
-    "existingVirtualMachines": "DC01, pj5izkgwaqu6c",
-    "existingBackupPolicy": "DefaultPolicy"
+    "skuName": "RS0",
+    "skuTier": "Standard"
   },
   "resources": [
     {
@@ -31,21 +17,6 @@
         "name": "[variables('skuName')]",
         "tier": "[variables('skuTier')]"
       }
-    },
-    {
-      "name": "[concat(variables('vaultName'), '/', variables('backupFabric'), '/', variables('v2VmContainer'), concat(parameters('existingVirtualMachinesResourceGroup'),';',variables('existingVirtualMachines')[copyIndex()]), '/', variables('v2Vm'), concat(parameters('existingVirtualMachinesResourceGroup'),';',variables('existingVirtualMachines')[copyIndex()]))]",
-      "apiVersion": "2016-06-01",
-      "location": "[variables('location')]",
-      "type": "Microsoft.RecoveryServices/vaults/backupFabrics/protectionContainers/protectedItems",
-      "copy": {
-        "name": "v2VmsCopy",
-        "count": "[length(variables('existingVirtualMachines'))]"
-      },
-      "properties": {
-        "protectedItemType": "[variables('v2VmType')]",
-        "policyId": "[resourceId('Microsoft.RecoveryServices/vaults/backupPolicies',variables('vaultName'),variables('existingBackupPolicy') )]",
-        "sourceResourceId": "[resourceId(subscription().subscriptionId,parameters('existingVirtualMachinesResourceGroup'),'Microsoft.Compute/virtualMachines',variables('existingVirtualMachines')[copyIndex()])]"
-      }
-    }
+  }
   ]
 }

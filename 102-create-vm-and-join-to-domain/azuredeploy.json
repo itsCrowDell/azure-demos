@@ -19,8 +19,9 @@
     "imagePublisher": "MicrosoftWindowsServer",
     "imageOffer": "WindowsServer",
     "windowsOSVersion": "2019-Datacenter",
-    "nicName": "[concat(variables('dnsLabelPrefix'),'-NIC01')]",
-    "publicIPName": "[concat(variables('dnsLabelPrefix'),'-PIP01')]",
+    "vmName": "FS01",
+    "nicName": "[concat(variables('vmName'),'-NIC01')]",
+    "publicIPName": "[concat(variables('vmName'),'-PIP01')]",
     "existingVNETName": "VNET01",
     "existingSubnetName": "Subnet01",
     "subnetId": "[resourceId(resourceGroup().name, 'Microsoft.Network/virtualNetworks/subnets', variables('existingVNETName'), variables('existingSubnetName'))]",
@@ -81,7 +82,7 @@
           "vmSize": "[variables('vmSize')]"
         },
         "osProfile": {
-          "computerName": "[variables('dnsLabelPrefix')]",
+          "computerName": "[variables('vmName')]",
           "adminUsername": "[parameters('domainUsername')]",
           "adminPassword": "[parameters('domainPassword')]"
         },
@@ -93,13 +94,13 @@
             "version": "latest"
           },
           "osDisk": {
-            "name": "[concat(variables('dnsLabelPrefix'),'_OsDisk')]",
+            "name": "[concat(variables('vmName'),'_OsDisk')]",
             "caching": "ReadWrite",
             "createOption": "FromImage"
           },
           "dataDisks": [
             {
-              "name": "[concat(variables('dnsLabelPrefix'),'_DataDisk01')]",
+              "name": "[concat(variables('vmName'),'_DataDisk01')]",
               "caching": "None",
               "createOption": "Empty",
               "diskSizeGB": "1000",
