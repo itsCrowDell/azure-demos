@@ -5,8 +5,6 @@
     "skuName": "RS0",
     "skuTier": "Standard",
     "vaultName": "contoso-vault",
-    "changeStorageType": "false",
-    "vaultStorageType": "GloballyRedundant",
     "location": "[resourceGroup().location]"
   },
   "resources": [
@@ -20,18 +18,7 @@
         "tier": "[variables('skuTier')]"
       },
       "properties": {}
-    },
-    {
-      "condition": "[variables('changeStorageType')]",
-      "type": "Microsoft.RecoveryServices/vaults/backupstorageconfig",
-      "name": "[concat(variables('vaultName'), '/vaultstorageconfig')]",
-      "apiVersion": "2018-01-10",
-      "dependsOn": [
-          "[resourceId('Microsoft.RecoveryServices/vaults/', variables('vaultName'))]"
-      ],
-      "properties": {
-          "StorageModelType":"[variables('vaultStorageType')]"
-      }
+    }
   }
   ]
 }
