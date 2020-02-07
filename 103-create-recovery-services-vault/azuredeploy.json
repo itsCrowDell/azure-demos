@@ -22,7 +22,7 @@
       "properties": {}
     },
     {
-      "condition": "[parameters('changeStorageType')]",
+      "condition": "[variables('changeStorageType')]",
       "type": "Microsoft.RecoveryServices/vaults/backupstorageconfig",
       "name": "[concat(variables('vaultName'), '/vaultstorageconfig')]",
       "apiVersion": "2018-01-10",
