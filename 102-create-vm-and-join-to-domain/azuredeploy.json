@@ -93,7 +93,7 @@
             "version": "latest"
           },
           "osDisk": {
-            "name": "[concat(variables('dnsLabelPrefix'),'_OSDisk')]",
+            "name": "[concat(variables('dnsLabelPrefix'),'_OsDisk')]",
             "caching": "ReadWrite",
             "createOption": "FromImage"
           },

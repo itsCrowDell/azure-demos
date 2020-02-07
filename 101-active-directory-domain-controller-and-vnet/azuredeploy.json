@@ -124,7 +124,7 @@
                         "version": "latest"
                     },
                     "osDisk": {
-                        "name": "[concat(variables('vmName'),'_OSDisk')]",
+                        "name": "[concat(variables('vmName'),'_OsDisk')]",
                         "caching": "ReadOnly",
                         "createOption": "FromImage",
                         "managedDisk": {
