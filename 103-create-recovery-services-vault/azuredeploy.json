@@ -16,7 +16,8 @@
       "sku": {
         "name": "[variables('skuName')]",
         "tier": "[variables('skuTier')]"
-      }
+      },
+      "properties": {}
   }
   ]
 }
