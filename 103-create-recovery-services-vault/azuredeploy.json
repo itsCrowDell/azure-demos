@@ -1,0 +1,37 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "variables": {
+    "skuName": "RS0",
+    "skuTier": "Standard",
+    "vaultName": "contoso-vault",
+    "changeStorageType": "false",
+    "vaultStorageType": "GloballyRedundant",
+    "location": "[resourceGroup().location]"
+  },
+  "resources": [
+    {
+      "type": "Microsoft.RecoveryServices/vaults",
+      "apiVersion": "2018-01-10",
+      "name": "[variables('vaultName')]",
+      "location": "[variables('location')]",
+      "sku": {
+        "name": "[variables('skuName')]",
+        "tier": "[variables('skuTier')]"
+      },
+      "properties": {}
+    },
+    {
+      "condition": "[parameters('changeStorageType')]",
+      "type": "Microsoft.RecoveryServices/vaults/backupstorageconfig",
+      "name": "[concat(variables('vaultName'), '/vaultstorageconfig')]",
+      "apiVersion": "2018-01-10",
+      "dependsOn": [
+          "[resourceId('Microsoft.RecoveryServices/vaults/', variables('vaultName'))]"
+      ],
+      "properties": {
+          "StorageModelType":"[variables('vaultStorageType')]"
+      }
+  }
+  ]
+}

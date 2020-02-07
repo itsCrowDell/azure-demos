@@ -19,7 +19,7 @@
       "dnsLabelPrefix": "[concat(uniquestring(resourceGroup().id))]",
       "windowsOSVersion": "2019-Datacenter",
       "vmSize": "Standard_B2s",
-      "location": "eastus",
+      "location": "[resourceGroup().location]",
       "nicName": "DC01-NIC01",
       "addressPrefix": "172.22.0.0/16",
       "subnetName": "Subnet01",

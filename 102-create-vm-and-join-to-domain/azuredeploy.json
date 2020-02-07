@@ -28,7 +28,7 @@
     "vmSize": "Standard_B2s",
     "domainToJoin": "contoso.com",
     "domainJoinOptions": "3",
-    "location": "eastus"
+    "location": "[resourceGroup().location]"
   },
   "resources": [
     {
