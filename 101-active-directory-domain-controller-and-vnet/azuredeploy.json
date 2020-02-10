@@ -26,7 +26,7 @@
       "privateIPAddress": "172.22.0.250",
       "vmName": "DC01",
       "nicName": "[concat(variables('vmName'),'-NIC01')]",
-      "publicIPName": "[concat(variables('vmName'),'-PIP01')]",
+      "publicIPAddressName": "[concat(variables('vmName'),'-PIP01')]",
       "virtualNetworkName": "VNET01",
       "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), variables('subnetName'))]",
       "networkSecurityGroupName": "default-NSG",

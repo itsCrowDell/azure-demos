@@ -3,7 +3,7 @@
   "contentVersion": "1.0.0.0",
   "variables": {
     "existingVirtualMachinesResourceGroup": "[resourceGroup().name]",
-    "existingVirtualMachines": ["DC01","pj5izkgwaqu6c"],
+    "existingVirtualMachines": ["DC01","FS01"],
     "existingRecoveryServicesVault": "contoso-vault",
     "existingBackupPolicy": "DefaultPolicy",
     "location": "[resourceGroup().location]",
