@@ -27,7 +27,7 @@
     "subnetId": "[resourceId(resourceGroup().name, 'Microsoft.Network/virtualNetworks/subnets', variables('existingVNETName'), variables('existingSubnetName'))]",
     "dnsLabelPrefix": "[concat(uniquestring(resourceGroup().id, deployment().name))]",
     "vmSize": "Standard_B2s",
-    "domainToJoin": "contoso.com",
+    "domainToJoin": "itscrowdell.local",
     "domainJoinOptions": "3",
     "location": "[resourceGroup().location]"
   },

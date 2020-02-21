@@ -30,7 +30,7 @@
       "virtualNetworkName": "VNET01",
       "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), variables('subnetName'))]",
       "networkSecurityGroupName": "default-NSG",
-      "domainName": "contoso.com",
+      "domainName": "itscrowdell.local",
       "_artifactsLocation": "[deployment().properties.templateLink.uri]",
       "_artifactsLocationSasToken": ""
     },
