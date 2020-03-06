@@ -56,6 +56,19 @@
 	        DependsOn = "[WindowsFeature]DNS"
         }
 
+        xWaitforDisk Disk2
+        {
+            DiskNumber = 2
+            RetryIntervalSec =$RetryIntervalSec
+            RetryCount = $RetryCount
+        }
+
+        xDisk ADDataDisk {
+            DiskNumber = 2
+            DriveLetter = "F"
+            DependsOn = "[xWaitForDisk]Disk2"
+        }
+
         WindowsFeature ADDSInstall 
         { 
             Ensure = "Present" 
@@ -82,10 +95,10 @@
             DomainName = $DomainName
             DomainAdministratorCredential = $DomainCreds
             SafemodeAdministratorPassword = $DomainCreds
-            DatabasePath = "C:\Windows\NTDS"
-            LogPath = "C:\Windows\NTDS"
-            SysvolPath = "C:\Windows\SYSVOL"
-	        DependsOn = "[WindowsFeature]ADDSInstall"
+            DatabasePath = "F:\NTDS"
+            LogPath = "F:\NTDS"
+            SysvolPath = "F:\SYSVOL"
+	        DependsOn = @("[xDisk]ADDataDisk", "[WindowsFeature]ADDSInstall")
         } 
 
    }
