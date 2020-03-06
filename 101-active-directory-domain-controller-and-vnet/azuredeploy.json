@@ -136,7 +136,7 @@
                             "name": "[concat(variables('vmName'), '_DataDisk01')]",
                             "caching": "ReadWrite",
                             "createOption": "Empty",
-                            "diskSizeGB": 20,
+                            "diskSizeGB": 4,
                             "managedDisk": {
                                 "storageAccountType": "StandardSSD_LRS"
                             },
